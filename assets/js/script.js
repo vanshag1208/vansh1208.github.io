@@ -160,4 +160,43 @@ for (let i = 0; i < navigationLinks.length; i++) {
   });
 }
 
+// ================= PROJECT FILTER =================
+
+const filterBtns = document.querySelectorAll("[data-filter-btn]");
+const projectItems = document.querySelectorAll("[data-filter-item]");
+
+filterBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+
+    // normalize button text
+    let filterValue = btn.innerText
+      .toLowerCase()
+      .replace(/\s+/g, " ") // extra spaces remove
+      .trim();
+
+    filterBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    projectItems.forEach(item => {
+
+      // normalize categories
+      let categories = item.dataset.category
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .split(",");
+
+      categories = categories.map(cat => cat.trim());
+
+      if (
+        filterValue === "all" ||
+        categories.includes(filterValue)
+      ) {
+        item.classList.add("active");
+      } else {
+        item.classList.remove("active");
+      }
+
+    });
+  });
+});
 
